@@ -713,7 +713,7 @@ const PHASES = [
   { name:'EOMC (7)',     start:6.65, dur:1.35, weeks:4.37, color:'#939DA8', region:'EOMC',     desc:'Caraïbes, Rep Dominicaine, Polynésie, Jamaïque, Mayotte, Porto Rico, Réunion' },
   { name:'LUB (6)',      start:7.85, dur:1.15, weeks:3.75, color:'#939DA8', region:'LUB',      desc:'Argentine, Brésil, Chili, Mexique, TEAFS, États-Unis' },
 ];
-const TOTAL_MONTHS = 9;
+const TOTAL_MONTHS = 10.25;
 
 function getSubStatus(regionName, subName) { const key = `${regionName}|${subName}`; if (!state[key]) return 'not-started'; return getStatus(state[key]); }
 
@@ -731,9 +731,9 @@ function getRegionBarColor(regionName, subs) {
 function renderGantt() {
   const monthRow = document.getElementById('gantt-month-row');
   if (monthRow) { const months = lang === 'fr'
-      ? ['26 Avr.','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.','Déc.']
-      : ['26 Apr.','May','Jun.','Jul.','Aug.','Sep.','Oct.','Nov.','Dec.'];
-    monthRow.innerHTML = months.map((m,i) => `<div class="month-cell" style="${i===0?'flex:0.5;':'flex:1;'}">${m}</div>`).join(''); }
+      ? ['26 Avr.','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.','Déc.','Jan.']
+      : ['26 Apr.','May','Jun.','Jul.','Aug.','Sep.','Oct.','Nov.','Dec.','Jan.'];
+    monthRow.innerHTML = months.map((m,i) => `<div class="month-cell" style="flex:${i===0?'0.25':'1'}">${m}</div>`).join(''); }
   const body = document.getElementById('gantt-body'); body.innerHTML = '';
   const tooltip = document.getElementById('gantt-tooltip');
   PHASES.forEach(p => {
@@ -758,7 +758,7 @@ function renderGantt() {
   });
   const fl = document.getElementById('gantt-footer-left'); const fr2 = document.getElementById('gantt-footer-right');
   if (fl) fl.textContent = lang === 'fr' ? 'Avril 2026' : 'April 2026';
-  if (fr2) fr2.textContent = lang === 'fr' ? 'Décembre 2026' : 'December 2026';
+  if (fr2) fr2.textContent = lang === 'fr' ? 'Janvier 2027' : 'January 2027';
 }
 
 function renderStepsLegend() {
