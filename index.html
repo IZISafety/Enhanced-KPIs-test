@@ -730,7 +730,10 @@ function getRegionBarColor(regionName, subs) {
 
 function renderGantt() {
   const monthRow = document.getElementById('gantt-month-row');
-  if (monthRow) { const months = t('months'); monthRow.innerHTML = months.map(m => `<div class="month-cell">${m}</div>`).join(''); }
+  if (monthRow) { const months = lang === 'fr'
+      ? ['26 Avr.','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.','Déc.']
+      : ['26 Apr.','May','Jun.','Jul.','Aug.','Sep.','Oct.','Nov.','Dec.'];
+    monthRow.innerHTML = months.map((m,i) => `<div class="month-cell" style="${i===0?'flex:0.5;':'flex:1;'}">${m}</div>`).join(''); }
   const body = document.getElementById('gantt-body'); body.innerHTML = '';
   const tooltip = document.getElementById('gantt-tooltip');
   PHASES.forEach(p => {
