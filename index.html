@@ -7,49 +7,77 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: Arial, sans-serif; background: #f0f4f8; color: #1a1a2e; }
-  header { background: linear-gradient(135deg, #1F3864, #2E5FA3); color: white; padding: 20px 32px; display: flex; justify-content: space-between; align-items: center; }
+
+  header {
+    background: linear-gradient(135deg, #1F3864, #2E5FA3);
+    color: white; padding: 20px 32px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
   header h1 { font-size: 18px; font-weight: 700; }
   header span { font-size: 12px; opacity: 0.8; }
   .header-right { display: flex; align-items: center; gap: 16px; }
+
   .lang-toggle { display: flex; border: 2px solid rgba(255,255,255,0.4); border-radius: 20px; overflow: hidden; }
   .lang-btn { padding: 5px 14px; cursor: pointer; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.6); background: transparent; transition: all 0.2s; border: none; }
   .lang-btn.active { background: rgba(255,255,255,0.25); color: white; }
   .lang-btn:hover { color: white; }
-  .lock-indicator { display: flex; align-items: center; gap: 7px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 600; cursor: default; user-select: none; transition: all 0.3s; }
+
+  .lock-indicator {
+    display: flex; align-items: center; gap: 7px;
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 600;
+    cursor: default; user-select: none; transition: all 0.3s;
+  }
   .lock-indicator.unlocked { background: rgba(112,173,71,0.25); border-color: rgba(112,173,71,0.5); color: #c8ffc0; }
   .lock-icon { font-size: 13px; }
+
   .tabs { display: flex; background: #1F3864; padding: 0 32px; }
   .tab { padding: 12px 24px; cursor: pointer; color: rgba(255,255,255,0.6); font-size: 13px; font-weight: 600; border-bottom: 3px solid transparent; transition: all 0.2s; }
   .tab.active { color: white; border-bottom-color: #F4B942; }
   .tab:hover { color: white; }
+
   .container { padding: 24px 32px; }
+
   .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
   .card { background: white; border-radius: 8px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); border-left: 4px solid #2E5FA3; }
   .card .label { font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
   .card .value { font-size: 28px; font-weight: 700; color: #1F3864; margin-top: 4px; }
   .card.green { border-left-color: #70AD47; } .card.green .value { color: #4a7a2e; }
   .card.orange { border-left-color: #F4B942; } .card.orange .value { color: #c8912a; }
+
   .gantt-wrap { background: white; border-radius: 8px; padding: 24px 28px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 24px; }
   .month-row { display: flex; border-bottom: 0.5px solid #e0e0e0; padding-bottom: 8px; margin-bottom: 6px; }
   .month-cell { flex: 1; font-size: 11px; color: #999; text-align: center; letter-spacing: 0.03em; }
   .phase-row { display: flex; align-items: center; height: 36px; margin-bottom: 6px; cursor: pointer; }
   .phase-row:hover .bar { filter: brightness(1.08); }
   .bar-area { flex: 1; position: relative; height: 100%; }
-  .bar { position: absolute; top: 50%; transform: translateY(-50%); height: 26px; border-radius: 6px; display: flex; align-items: center; padding: 0 10px; font-size: 12px; font-weight: 500; color: #fff; overflow: hidden; transition: all 0.2s ease; }
+  .bar {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    height: 26px; border-radius: 6px;
+    display: flex; align-items: center; padding: 0 10px;
+    font-size: 12px; font-weight: 500; color: #fff;
+    overflow: hidden; transition: all 0.2s ease;
+  }
+  .bar .weeks { margin-left: auto; padding-left: 10px; font-size: 11px; font-weight: 400; opacity: 0.75; }
   .grid-line { position: absolute; top: 0; bottom: 0; width: 0.5px; background: #ebebeb; pointer-events: none; }
+
   .badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
   .badge.not-started { background: #f0f0f0; color: #666; }
   .badge.in-progress { background: #fff3cd; color: #856404; }
   .badge.completed { background: #d4edda; color: #155724; }
+
   .detail-wrap { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
   .detail-wrap h2 { font-size: 14px; color: #1F3864; margin-bottom: 12px; font-weight: 700; }
+
   .steps-legend { background: #f0f4ff; border: 1px solid #c8d8f0; border-radius: 8px; padding: 14px 18px; margin-bottom: 16px; }
   .steps-legend-title { font-weight: 700; color: #1F3864; margin-bottom: 10px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.4px; }
   .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
   .step-pill { display: flex; align-items: flex-start; gap: 8px; background: white; border: 1px solid #dde6f5; border-radius: 6px; padding: 8px 10px; font-size: 11px; line-height: 1.4; }
   .step-pill .snum { background: #2E5FA3; color: white; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
   .filters { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
   .filters select, .filters input { border: 1px solid #ddd; border-radius: 6px; padding: 7px 12px; font-size: 12px; color: #333; background: white; }
+
   .detail-table { width: 100%; border-collapse: collapse; font-size: 12px; }
   .detail-table th { background: #2E5FA3; color: white; padding: 10px 8px; text-align: center; font-weight: 600; white-space: nowrap; }
   .detail-table th.left { text-align: left; padding-left: 12px; }
@@ -58,17 +86,29 @@
   .detail-table tr:hover td { background: #f0f4ff; }
   .detail-table tr:nth-child(even) td { background: #f7f9fc; }
   .detail-table tr:nth-child(even):hover td { background: #f0f4ff; }
+
   .region-tag { display: inline-block; background: #e8eef8; color: #2E5FA3; padding: 2px 8px; border-radius: 4px; font-weight: 700; font-size: 11px; }
+
   .step-check { font-size: 15px; user-select: none; transition: opacity 0.2s; }
   .step-check.editable { cursor: pointer; }
-  .step-check.locked { cursor: not-allowed; opacity: 0.5; user-select: none; pointer-events: none; }
+  .step-check.locked { cursor: not-allowed; opacity: 0.5; }
   .step-check.done { color: #70AD47; opacity: 1; }
+
   .prog-wrap { background: #eef0f3; border-radius: 4px; height: 6px; width: 70px; display: inline-block; vertical-align: middle; }
   .prog-bar { height: 6px; border-radius: 4px; background: #2E5FA3; transition: width 0.3s; }
+
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
-  .save-indicator { position: fixed; bottom: 20px; right: 24px; background: #1F3864; color: white; padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; opacity: 0; transition: opacity 0.3s; pointer-events: none; box-shadow: 0 2px 12px rgba(0,0,0,0.2); }
+
+  .save-indicator {
+    position: fixed; bottom: 20px; right: 24px;
+    background: #1F3864; color: white; padding: 8px 16px;
+    border-radius: 20px; font-size: 12px; font-weight: 600;
+    opacity: 0; transition: opacity 0.3s; pointer-events: none;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  }
   .save-indicator.visible { opacity: 1; }
+
   .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center; }
   .modal-overlay.open { display: flex; }
   .modal { background: white; border-radius: 14px; padding: 32px; width: 360px; box-shadow: 0 8px 40px rgba(0,0,0,0.25); text-align: center; }
@@ -84,11 +124,15 @@
   .btn-primary { background: #2E5FA3; color: white; }
   .btn-primary:hover { background: #1F3864; }
   .btn-secondary { background: #f0f0f0; color: #666; }
+
   @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+
   .loading-overlay { position: fixed; inset: 0; background: #f0f4f8; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 200; transition: opacity 0.4s; }
   .loading-overlay.hidden { opacity: 0; pointer-events: none; }
   .loading-spinner { width: 36px; height: 36px; border: 3px solid #dde6f5; border-top-color: #2E5FA3; border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 14px; }
   @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── COMMUNICATIONS TAB ── */
   .comms-wrap { background: white; border-radius: 8px; padding: 24px 28px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 24px; }
   .comms-wrap h2 { font-size: 14px; color: #1F3864; font-weight: 700; margin-bottom: 4px; }
   .comms-wrap .comms-sub { font-size: 12px; color: #888; margin-bottom: 20px; }
@@ -108,19 +152,26 @@
   .vars-note { background: #fff8e6; border: 1px solid #f4d87a; border-radius: 6px; padding: 10px 14px; font-size: 11px; color: #7a5c00; margin-bottom: 20px; }
   .vars-note strong { color: #5a4000; }
 </style>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-<script>
-  const firebaseConfig = { apiKey:"AIzaSyCsEXFHj83mhlXsn-bN-MAGTYdBR0X6sUI", authDomain:"izi-tracker-6d69a.firebaseapp.com", projectId:"izi-tracker-6d69a", storageBucket:"izi-tracker-6d69a.firebasestorage.app", messagingSenderId:"265890994822", appId:"1:265890994822:web:903ffa84cfa1278dbb0f07" };
-  try {
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-    const DOC_REF = db.collection('tracker').doc('state');
-    window.firebaseLoad = async function() { try { const snap = await DOC_REF.get(); if (snap.exists) return snap.data(); } catch(e) {} return null; };
-    window.firebaseSave = async function(data) { try { await DOC_REF.set(data); return true; } catch(e) { return false; } };
-    window.firebaseReady = true;
-  } catch(e) { window.firebaseReady = false; }
-</script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCsEXFHj83mhlXsn-bN-MAGTYdBR0X6sUI",
+      authDomain: "izi-tracker-6d69a.firebaseapp.com",
+      projectId: "izi-tracker-6d69a",
+      storageBucket: "izi-tracker-6d69a.firebasestorage.app",
+      messagingSenderId: "265890994822",
+      appId: "1:265890994822:web:903ffa84cfa1278dbb0f07"
+    };
+    try {
+      const app = firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+      const DOC_REF = db.collection('tracker').doc('state');
+      window.firebaseLoad = async function() { try { const snap = await DOC_REF.get(); if (snap.exists) return snap.data(); } catch(e) { console.warn('Firebase load failed:', e); } return null; };
+      window.firebaseSave = async function(data) { try { await DOC_REF.set(data); return true; } catch(e) { console.warn('Firebase save failed:', e); return false; } };
+      window.firebaseReady = true;
+    } catch(e) { console.warn('Firebase init failed:', e); window.firebaseReady = false; }
+  </script>
 </head>
 <body>
 
@@ -132,10 +183,13 @@
 <header>
   <div>
     <h1 id="h-title">IZI Safety — User Profile Harmonization</h1>
-    <span id="h-sub">Planning Tracker | Schedule: 26/04/2026 – 31/01/2027</span>
+    <span id="h-sub">Planning Tracker | Schedule: 01/04/2026 – 31/12/2026</span>
   </div>
   <div class="header-right">
-    <div class="lock-indicator" id="lock-indicator"><span class="lock-icon">🔒</span><span id="lock-label">View only</span></div>
+    <div class="lock-indicator" id="lock-indicator">
+      <span class="lock-icon">🔒</span>
+      <span id="lock-label">View only</span>
+    </div>
     <div style="text-align:right;font-size:12px;opacity:0.8" id="h-meta">45 subsidiaries · 8 regions · 9 months</div>
     <div class="lang-toggle">
       <button class="lang-btn" onclick="setLang('fr')">FR</button>
@@ -161,16 +215,16 @@
       <div class="card"><div class="label" id="card-pend-lbl">Not Started</div><div class="value" id="cnt-pending">45</div></div>
     </div>
     <div class="gantt-wrap">
-      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:20px">
-        <span style="font-size:14px;font-weight:700;color:#1F3864" id="gantt-title">General Schedule – Gantt View by Zone</span>
-        <span style="font-size:12px;color:#888">26/04/2026 — 31/01/2027</span>
+      <div class="header" style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:20px">
+        <span style="font-size:14px;font-weight:700;color:#1F3864" id="gantt-title">General Schedule – Gantt View by Subsidiary</span>
+        <span style="font-size:12px;color:#888">01/04/2026 — 31/12/2026</span>
       </div>
-      <div id="gantt-chart">
+      <div class="chart" id="gantt-chart">
         <div class="month-row" id="gantt-month-row"></div>
         <div id="gantt-body"></div>
-        <div style="display:flex;justify-content:space-between;margin-top:10px;padding-top:8px;border-top:0.5px solid #ebebeb">
+        <div class="footer" style="display:flex;justify-content:space-between;margin-top:10px;padding-top:8px;border-top:0.5px solid #ebebeb">
           <span style="font-size:11px;color:#bbb" id="gantt-footer-left">April 2026</span>
-          <span style="font-size:11px;color:#bbb" id="gantt-footer-right">January 2027</span>
+          <span style="font-size:11px;color:#bbb" id="gantt-footer-right">December 2026</span>
         </div>
       </div>
     </div>
@@ -192,7 +246,6 @@
         <select id="filter-region" onchange="renderDetail()"></select>
         <input type="text" id="filter-search" oninput="renderDetail()">
         <select id="filter-status" onchange="renderDetail()"></select>
-        <button onclick="clearFilters()" style="padding:7px 14px;border:1px solid #ddd;border-radius:6px;font-size:12px;color:#666;background:white;cursor:pointer;">✕ Clear</button>
       </div>
       <div style="overflow-x:auto">
         <table class="detail-table">
@@ -203,66 +256,96 @@
     </div>
   </div>
 
+  <!-- ── COMMUNICATIONS TAB ── -->
   <div class="tab-panel" id="tab-comms">
     <div class="comms-wrap">
       <h2 id="comms-title">Communication Templates</h2>
-      <p class="comms-sub" id="comms-sub">Ready-to-use templates for Step 4 and Step 6. Click "Copy" to copy any template to your clipboard.</p>
-      <div class="vars-note"><strong>Variables:</strong> Replace <code>{{first_name}}</code>, <code>{{entity}}</code>, <code>{{new_elearnings}}</code>, <code>{{removed_resources}}</code>, <code>{{impacted_count}}</code>, <code>{{profiles_list}}</code> with actual values — or ask the IZI Safety tech team to fill them in automatically.</div>
+      <p class="comms-sub" id="comms-sub">Ready-to-use templates for Step 4 (contractor communication) and Step 6 (project closure). Click "Copy" to copy any template to your clipboard.</p>
+
+      <div class="vars-note">
+        <strong>Variables:</strong> Replace <code>{{first_name}}</code>, <code>{{entity}}</code>, <code>{{new_elearnings}}</code>, <code>{{removed_resources}}</code>, <code>{{impacted_count}}</code>, <code>{{profiles_list}}</code> with the actual values for each recipient — or ask the IZI Safety tech team to fill them in automatically.
+      </div>
+
+      <!-- Initiation email -->
       <div class="comms-section-title" id="comms-init-title">✉️ Project Initiation Email — Subsidiary Administrator (Step 1)</div>
       <div class="comms-cards" id="comms-init-cards"></div>
-      <div class="comms-section-title" id="comms-inapp-title">📱 In-App Notification — Individual Worker (Steps 4 & 6)</div>
+
+      <!-- In-app notifications -->
+      <div class="comms-section-title" id="comms-inapp-title">📱 In-App Notification — Individual Worker (Step 4 & 6)</div>
       <div class="comms-cards" id="comms-inapp-cards"></div>
+
+      <!-- Company emails -->
       <div class="comms-section-title" id="comms-email-title">📧 Company Email — Contractor Company Contact (Customer.io)</div>
       <div class="comms-cards" id="comms-email-cards"></div>
     </div>
   </div>
 
+  <!-- ── WORKFLOW TAB (MOVED HERE) ── -->
   <div class="tab-panel" id="tab-workflow">
     <div class="comms-wrap">
       <h2 id="workflow-title">Project Workflow</h2>
-      <p class="comms-sub" id="workflow-sub">End-to-end view of the harmonisation project — from initiation to post-deployment.</p>
-      <div class="comms-section-title">Global project workflow — 6 steps</div>
+      <p class="comms-sub" id="workflow-sub">End-to-end view of the harmonisation project — from initiation to post-deployment. Click any diagram to explore.</p>
+
+      <div class="comms-section-title">Global project workflow — 7 steps</div>
       <div style="overflow-x:auto;margin-bottom:28px">
         <svg width="100%" viewBox="0 0 680 820" xmlns="http://www.w3.org/2000/svg">
           <defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
-          <rect x="40" y="20" width="14" height="14" rx="3" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/><text font-size="12" fill="#555" font-family="Arial,sans-serif" x="60" y="31">TotalEnergies HQ</text>
-          <rect x="200" y="20" width="14" height="14" rx="3" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/><text font-size="12" fill="#555" font-family="Arial,sans-serif" x="220" y="31">IZI Safety</text>
-          <rect x="310" y="20" width="14" height="14" rx="3" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/><text font-size="12" fill="#555" font-family="Arial,sans-serif" x="330" y="31">Subsidiary admin</text>
-          <rect x="460" y="20" width="14" height="14" rx="3" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/><text font-size="12" fill="#555" font-family="Arial,sans-serif" x="480" y="31">Contractor company</text>
+          <rect x="40" y="20" width="14" height="14" rx="3" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+          <text font-size="12" fill="#555" font-family="Arial,sans-serif" x="60" y="31">TotalEnergies HQ</text>
+          <rect x="200" y="20" width="14" height="14" rx="3" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+          <text font-size="12" fill="#555" font-family="Arial,sans-serif" x="220" y="31">IZI Safety</text>
+          <rect x="310" y="20" width="14" height="14" rx="3" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+          <text font-size="12" fill="#555" font-family="Arial,sans-serif" x="330" y="31">Subsidiary admin</text>
+          <rect x="460" y="20" width="14" height="14" rx="3" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+          <text font-size="12" fill="#555" font-family="Arial,sans-serif" x="480" y="31">Contractor company</text>
+          <!-- Step 1 -->
           <rect x="200" y="60" width="280" height="56" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
           <text font-size="14" font-weight="500" fill="#0C447C" font-family="Arial,sans-serif" x="340" y="83" text-anchor="middle">Step 1 — Project initiation</text>
           <text font-size="12" fill="#185FA5" font-family="Arial,sans-serif" x="340" y="101" text-anchor="middle">HQ sends initiation email to subsidiary</text>
           <line x1="340" y1="116" x2="340" y2="150" stroke="#185FA5" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <!-- Step 2 -->
           <rect x="200" y="150" width="280" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
           <text font-size="14" font-weight="500" fill="#085041" font-family="Arial,sans-serif" x="340" y="173" text-anchor="middle">Step 2 — Gap analysis</text>
           <text font-size="12" fill="#0F6E56" font-family="Arial,sans-serif" x="340" y="191" text-anchor="middle">IZI Safety: harmonised vs operational matrix</text>
           <line x1="340" y1="206" x2="340" y2="240" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <!-- Step 3 -->
           <rect x="200" y="240" width="280" height="56" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
           <text font-size="14" font-weight="500" fill="#3C3489" font-family="Arial,sans-serif" x="340" y="263" text-anchor="middle">Step 3 — Review meeting</text>
           <text font-size="12" fill="#534AB7" font-family="Arial,sans-serif" x="340" y="281" text-anchor="middle">IZI Safety + subsidiary admins</text>
           <line x1="340" y1="296" x2="340" y2="330" stroke="#534AB7" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <!-- Step 4 -->
           <rect x="200" y="330" width="280" height="56" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
           <text font-size="14" font-weight="500" fill="#633806" font-family="Arial,sans-serif" x="340" y="353" text-anchor="middle">Step 4 — Contractor communication</text>
           <text font-size="12" fill="#854F0B" font-family="Arial,sans-serif" x="340" y="371" text-anchor="middle">IZI Safety notifies contractor companies</text>
           <line x1="340" y1="386" x2="340" y2="420" stroke="#854F0B" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <!-- Step 5 -->
           <rect x="200" y="420" width="280" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
           <text font-size="14" font-weight="500" fill="#085041" font-family="Arial,sans-serif" x="340" y="443" text-anchor="middle">Step 5 — Profile update</text>
           <text font-size="12" fill="#0F6E56" font-family="Arial,sans-serif" x="340" y="461" text-anchor="middle">IZI Safety updates profiles on platform</text>
           <line x1="270" y1="476" x2="150" y2="520" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)"/>
           <line x1="410" y1="476" x2="530" y2="520" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <!-- Branch left -->
           <rect x="50" y="520" width="200" height="56" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
           <text font-size="14" font-weight="500" fill="#3C3489" font-family="Arial,sans-serif" x="150" y="543" text-anchor="middle">In-app notification</text>
           <text font-size="12" fill="#534AB7" font-family="Arial,sans-serif" x="150" y="561" text-anchor="middle">Individual worker notified</text>
+          <!-- Branch right -->
           <rect x="430" y="520" width="200" height="56" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
           <text font-size="14" font-weight="500" fill="#633806" font-family="Arial,sans-serif" x="530" y="543" text-anchor="middle">Customer.io email</text>
           <text font-size="12" fill="#854F0B" font-family="Arial,sans-serif" x="530" y="561" text-anchor="middle">Contractor company notified</text>
           <line x1="150" y1="576" x2="270" y2="630" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)"/>
           <line x1="530" y1="576" x2="410" y2="630" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <!-- Step 6 -->
           <rect x="200" y="630" width="280" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
           <text font-size="14" font-weight="500" fill="#085041" font-family="Arial,sans-serif" x="340" y="653" text-anchor="middle">Step 6 — Closure communication</text>
           <text font-size="12" fill="#0F6E56" font-family="Arial,sans-serif" x="340" y="671" text-anchor="middle">IZI Safety: closure to admins + contractors</text>
+          <line x1="340" y1="686" x2="340" y2="720" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <!-- Step 7 -->
+          <rect x="200" y="720" width="280" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+          <text font-size="14" font-weight="500" fill="#085041" font-family="Arial,sans-serif" x="340" y="743" text-anchor="middle">Step 7 — Post-deployment</text>
+          <text font-size="12" fill="#0F6E56" font-family="Arial,sans-serif" x="340" y="761" text-anchor="middle">IZI Safety: support + impact analysis</text>
         </svg>
       </div>
+
       <div class="comms-section-title">Customer.io automation flow — detail</div>
       <div style="overflow-x:auto">
         <svg width="100%" viewBox="0 0 680 640" xmlns="http://www.w3.org/2000/svg">
@@ -322,18 +405,18 @@
 </div>
 
 <script>
-const REGIONS = [
-  { name:"AFR/AFO",  count:8,  start:1, end:2, color:"#939DA8", subs:["Ghana","Togo","Guinée Conakry","Cameroun","Sénégal","Côte d'Ivoire","Gabon","Guinée Equatoriale"] },
-  { name:"AFR/MOI",  count:8,  start:2, end:3, color:"#939DA8", subs:["Tunisie","Maurice","Maroc","Algérie","Egypte","Ethiopie","Madagascar","Mozambique"] },
-  { name:"AFR/NG",   count:1,  start:3, end:3, color:"#939DA8", subs:["Nigéria"] },
-  { name:"AFR/ACE",  count:8,  start:4, end:5, color:"#939DA8", subs:["Malawi","Zambie","RDC","Congo","Ouganda","Kenya","Tanzanie","Zimbabwe"] },
-  { name:"AFR/ASNE", count:2,  start:5, end:6, color:"#939DA8", subs:["Afrique du Sud","Namibie"] },
-  { name:"APMO",     count:5,  start:6, end:7, color:"#939DA8", subs:["Cambodge","Fidji","Inde","Jordanie","Liban"] },
-  { name:"EOMC",     count:7,  start:7, end:8, color:"#939DA8", subs:["Caraïbes","Rép. Dominicaine","Polynésie","Jamaïque","Mayotte","Porto Rico","Réunion"] },
-  { name:"LUB",      count:6,  start:8, end:9, color:"#939DA8", subs:["Argentine","Brésil","Chili","Mexique","TEAFS","USA"] },
+const REGIONS =[
+  { name:"AFR/AFO",  count:8,  start:0, end:1, color:"#939DA8", subs:["Ghana","Togo","Guinée Conakry","Cameroun","Sénégal","Côte d'Ivoire","Gabon","Guinée Equatoriale"] },
+  { name:"AFR/MOI",  count:8,  start:1, end:2, color:"#939DA8", subs:["Tunisie","Maurice","Maroc","Algérie","Egypte","Ethiopie","Madagascar","Mozambique"] },
+  { name:"AFR/NG",   count:1,  start:2, end:2, color:"#939DA8", subs:["Nigéria"] },
+  { name:"AFR/ACE",  count:8,  start:3, end:4, color:"#939DA8", subs:["Malawi","Zambie","RDC","Congo","Ouganda","Kenya","Tanzanie","Zimbabwe"] },
+  { name:"AFR/ASNE", count:2,  start:4, end:5, color:"#939DA8", subs:["Afrique du Sud","Namibie"] },
+  { name:"APMO",     count:5,  start:5, end:6, color:"#939DA8", subs:["Cambodge","Fidji","Inde","Jordanie","Liban"] },
+  { name:"EOMC",     count:7,  start:6, end:7, color:"#939DA8", subs:["Caraïbes","Rép. Dominicaine","Polynésie","Jamaïque","Mayotte","Porto Rico","Réunion"] },
+  { name:"LUB",      count:6,  start:7, end:8, color:"#939DA8", subs:["Argentine","Brésil","Chili","Mexique","TEAFS","USA"] },
 ];
 
-const STEPS = [
+const STEPS =[
   { num:1, key:'s1', labelEN:'Step 1', labelFR:'Étape 1', descEN:'Initial communication to subsidiary', descFR:'Communication initiale à la filiale' },
   { num:2, key:'s2', labelEN:'Step 2', labelFR:'Étape 2', descEN:'Gap analysis: harmonized vs operational matrix', descFR:'Analyse comparative matrice harmonisée vs opérationnelle' },
   { num:3, key:'s3', labelEN:'Step 3', labelFR:'Étape 3', descEN:'Review meeting with subsidiary administrators', descFR:'Réunion de revue avec les administrateurs' },
@@ -349,11 +432,15 @@ REGIONS.forEach(r => r.subs.forEach(s => {
   state[`${r.name}|${s}`] = {};
   STEPS.forEach(st => state[`${r.name}|${s}`][st.key] = false);
 }));
+
 let lang = 'en';
 
+// ── COMMUNICATION TEMPLATES ───────────────────────────────────
 const TEMPLATES = {
   initiation: {
-    fr: `Dans le cadre du déploiement du projet d'harmonisation des profils utilisateurs au sein de votre filiale, une matrice harmonisée a été élaborée par le siège en collaboration avec IZI Safety.
+    fr: `Bonjour, 
+    
+Dans le cadre du déploiement du projet d'harmonisation des profils utilisateurs au sein de votre filiale, une matrice harmonisée a été élaborée par le siège en collaboration avec IZI Safety.
 
 Ce projet vise à établir un socle commun minimal d'exigences pour chaque profil utilisateur dans l'ensemble des filiales de la branche MS et à uniformiser les intitulés des profils.
 
@@ -369,7 +456,9 @@ L'ensemble de ces étapes est piloté par IZI Safety. Votre rôle principal sera
 L'équipe IZI Safety, coordonnée par Ludovic et Ghita, reviendra vers vous prochainement pour planifier la réunion de revue. En attendant, nous restons disponibles pour toute question.
 
 Cordialement,`,
-    en: `As part of the deployment of the user profile harmonisation project within your subsidiary, a harmonised matrix has been developed by TotalEnergies Headquarters in collaboration with IZI Safety.
+    en: `Hello, 
+    
+As part of the deployment of the user profile harmonisation project within your subsidiary, a harmonised matrix has been developed by TotalEnergies Headquarters in collaboration with IZI Safety.
 
 This project aims to establish a common minimum set of requirements for each user profile across all MS branch subsidiaries, and to standardise profile titles throughout all entities.
 
@@ -435,6 +524,8 @@ Résumé des changements :
 
 Ces modifications s'inscrivent dans un effort de standardisation des exigences de sécurité à l'échelle de toutes les filiales TotalEnergies MS. Vos collaborateurs ont été notifiés individuellement via la plateforme IZI Safety et invités à compléter les nouveaux modules requis.
 
+Nous vous recommandons de vous assurer que vos collaborateurs prennent connaissance de ces mises à jour dans les meilleurs délais afin de maintenir leur conformité.
+
 Pour toute question : support@izisafety.com
 
 Cordialement,
@@ -451,6 +542,8 @@ Summary of changes:
 
 These updates are part of a broader effort to standardise safety requirements across all TotalEnergies MS subsidiaries. Your employees have been individually notified through the IZI Safety platform and invited to complete the newly required modules.
 
+We recommend ensuring that your employees review these updates promptly in order to maintain their compliance status.
+
 Any questions? Contact us at: support@izisafety.com
 
 Best regards,
@@ -459,53 +552,76 @@ The IZI Safety Team`
 };
 
 function renderComms() {
-  const sections = [
-    { el: document.getElementById('comms-init-cards'),  type: 'initiation', channel: lang==='fr' ? 'Email – Étape 1' : 'Email – Step 1' },
-    { el: document.getElementById('comms-inapp-cards'), type: 'inapp',      channel: lang==='fr' ? 'Notification in-app' : 'In-app notification' },
-    { el: document.getElementById('comms-email-cards'), type: 'email',      channel: lang==='fr' ? 'Email Customer.io' : 'Customer.io email' },
+  const initCards = document.getElementById('comms-init-cards');
+  const inappCards = document.getElementById('comms-inapp-cards');
+  const emailCards = document.getElementById('comms-email-cards');
+
+  const sections =[
+    { el: initCards,  type: 'initiation', channel: lang === 'fr' ? 'Email – Étape 1' : 'Email – Step 1' },
+    { el: inappCards, type: 'inapp',      channel: lang === 'fr' ? 'Notification in-app' : 'In-app notification' },
+    { el: emailCards, type: 'email',      channel: lang === 'fr' ? 'Email Customer.io' : 'Customer.io email' },
   ];
+
   sections.forEach(({ el, type, channel }) => {
-    el.innerHTML = ['fr','en'].map(l => `
+    el.innerHTML = ['fr', 'en'].map(l => `
       <div class="comms-card">
-        <div class="comms-card-header"><span class="lang-badge ${l}">${l.toUpperCase()}</span><span class="channel-badge">${channel}</span></div>
-        <div class="comms-card-body">${TEMPLATES[type][l]}</div>
-        <div class="comms-card-footer"><button class="copy-btn" id="copy-${type}-${l}" onclick="copyTemplate('${type}','${l}')">${lang==='fr'?'Copier':'Copy'}</button></div>
-      </div>`).join('');
+        <div class="comms-card-header">
+          <span class="lang-badge ${l}">${l.toUpperCase()}</span>
+          <span class="channel-badge">${channel}</span>
+        </div>
+        <div class="comms-card-body" id="tpl-${type}-${l}">${TEMPLATES[type][l]}</div>
+        <div class="comms-card-footer">
+          <button class="copy-btn" id="copy-${type}-${l}" onclick="copyTemplate('${type}','${l}')">
+            ${lang === 'fr' ? 'Copier' : 'Copy'}
+          </button>
+        </div>
+      </div>
+    `).join('');
   });
-  document.getElementById('comms-inapp-title').textContent = lang==='fr' ? '📱 Notification In-App — Collaborateur individuel (Étapes 4 & 6)' : '📱 In-App Notification — Individual Worker (Steps 4 & 6)';
-  document.getElementById('comms-email-title').textContent = lang==='fr' ? '📧 Email Entreprise — Contact société contractante (Customer.io)' : '📧 Company Email — Contractor Company Contact (Customer.io)';
-  document.getElementById('comms-init-title').textContent = lang==='fr' ? '✉️ Email d\'initiation — Administrateur filiale (Étape 1)' : '✉️ Project Initiation Email — Subsidiary Administrator (Step 1)';
-  document.getElementById('comms-title').textContent = lang==='fr' ? 'Modèles de Communication' : 'Communication Templates';
-  document.getElementById('comms-sub').textContent = lang==='fr' ? 'Modèles prêts à l\'emploi. Cliquez sur "Copier" pour copier dans le presse-papier.' : 'Ready-to-use templates. Click "Copy" to copy any template to your clipboard.';
-  document.getElementById('workflow-title').textContent = lang==='fr' ? 'Workflow du Projet' : 'Project Workflow';
-  document.getElementById('workflow-sub').textContent = lang==='fr' ? 'Vue complète du projet d\'harmonisation.' : 'End-to-end view of the harmonisation project.';
+
+  // Section titles
+  document.getElementById('comms-inapp-title').textContent = lang === 'fr'
+    ? '📱 Notification In-App — Collaborateur individuel (Étapes 4 & 6)'
+    : '📱 In-App Notification — Individual Worker (Steps 4 & 6)';
+  document.getElementById('comms-email-title').textContent = lang === 'fr'
+    ? '📧 Email Entreprise — Contact société contractante (Customer.io)'
+    : '📧 Company Email — Contractor Company Contact (Customer.io)';
+  document.getElementById('comms-title').textContent = lang === 'fr' ? 'Modèles de Communication' : 'Communication Templates';
+  document.getElementById('comms-sub').textContent = lang === 'fr'
+    ? 'Modèles prêts à l\'emploi pour les étapes 4 et 6. Cliquez sur "Copier" pour copier dans le presse-papier.'
+    : 'Ready-to-use templates for Step 4 and Step 6. Click "Copy" to copy any template to your clipboard.';
 }
 
 function copyTemplate(type, l) {
-  navigator.clipboard.writeText(TEMPLATES[type][l]).then(() => {
+  const text = TEMPLATES[type][l];
+  navigator.clipboard.writeText(text).then(() => {
     const btn = document.getElementById(`copy-${type}-${l}`);
-    btn.textContent = lang==='fr' ? '✓ Copié !' : '✓ Copied!';
+    btn.textContent = lang === 'fr' ? '✓ Copié !' : '✓ Copied!';
     btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = lang==='fr'?'Copier':'Copy'; btn.classList.remove('copied'); }, 2000);
+    setTimeout(() => {
+      btn.textContent = lang === 'fr' ? 'Copier' : 'Copy';
+      btn.classList.remove('copied');
+    }, 2000);
   });
 }
 
+// ── LANGUAGE ─────────────────────────────────────────────────
 const T = {
-  en: { hTitle:'IZI Safety — User Profile Harmonization', hSub:'Planning Tracker | Schedule: 26/04/2026 – 31/01/2027', hMeta:'45 subsidiaries · 8 regions · 9 months', tabOverview:'Overview', tabDetail:'Subsidiary Detail', tabComms:'Communications', tabWorkflow:'Workflow', cardTotal:'Total Subsidiaries', cardDone:'Completed', cardProg:'In Progress', cardPend:'Not Started', ganttTitle:'General Schedule – Gantt View by Zone', months:['26 Apr.','May','Jun.','Jul.','Aug.','Sep.','Oct.','Nov.','Dec.','Jan.'], monthsFull:['April','May','June','July','August','September','October','November','December','January'], detailTitle:'Detailed Tracking by Subsidiary', legendTitle:'Tracked Steps', filterAllRegions:'All zones', filterSearch:'Search subsidiary…', filterAllStatus:'All statuses', filterNotStarted:'Not started', filterInProgress:'In progress', filterCompleted:'Completed', thRegion:'Zone', thSub:'Subsidiary', thPeriod:'Period', thProgress:'Progress', thStatus:'Status', badgeNotStarted:'Not started', badgeInProgress:'In progress', badgeCompleted:'Completed', lockLabel:'View only', unlockLabel:'Editing unlocked', modalTitle:'Admin Access', modalDesc:'Enter your PIN to unlock editing.', modalCancel:'Cancel', modalConfirm:'Unlock', pinWrong:'Incorrect PIN. Try again.', saved:'✓ Saved', savedLocal:'✓ Saved locally', lockedTip:'Unlock editing to interact' },
-  fr: { hTitle:'IZI Safety — Harmonisation des Profils Utilisateurs', hSub:'Planning Tracker | Calendrier : 26/04/2026 – 31/01/2027', hMeta:'45 filiales · 8 régions · 9 mois', tabOverview:'Vue Générale', tabDetail:'Détail par Filiale', tabComms:'Communications', tabWorkflow:'Workflow', cardTotal:'Total Filiales', cardDone:'Complétées', cardProg:'En cours', cardPend:'Non démarrées', ganttTitle:'Planning Général – Vue Gantt par Zone', months:['26 Avr.','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.','Déc.','Jan.'], monthsFull:['Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre','Janvier'], detailTitle:'Suivi Détaillé par Filiale', legendTitle:'Étapes suivies', filterAllRegions:'Toutes les zones', filterSearch:'Rechercher une filiale…', filterAllStatus:'Tous les statuts', filterNotStarted:'Non démarré', filterInProgress:'En cours', filterCompleted:'Complété', thRegion:'Zone', thSub:'Filiale', thPeriod:'Période', thProgress:'Progression', thStatus:'Statut', badgeNotStarted:'Non démarré', badgeInProgress:'En cours', badgeCompleted:'Complété', lockLabel:'Lecture seule', unlockLabel:'Édition déverrouillée', modalTitle:'Accès administrateur', modalDesc:'Entrez votre PIN pour déverrouiller l\'édition.', modalCancel:'Annuler', modalConfirm:'Déverrouiller', pinWrong:'PIN incorrect. Réessayez.', saved:'✓ Enregistré', savedLocal:'✓ Enregistré localement', lockedTip:'Déverrouiller pour interagir' }
+  en: { hTitle:'IZI Safety — User Profile Harmonization', hSub:'Planning Tracker | Schedule: 01/04/2026 – 31/12/2026', hMeta:'45 subsidiaries · 8 regions · 9 months', tabOverview:'Overview', tabDetail:'Subsidiary Detail', tabComms:'Communications', cardTotal:'Total Subsidiaries', cardDone:'Completed', cardProg:'In Progress', cardPend:'Not Started', ganttTitle:'General Schedule – Gantt View by Zone', months:['Apr.','May','Jun.','Jul.','Aug.','Sep.','Oct.','Nov.','Dec.'], monthsFull:['April','May','June','July','August','September','October','November','December'], detailTitle:'Detailed Tracking by Subsidiary', legendTitle:'Tracked Steps', filterAllRegions:'All zones', filterSearch:'Search subsidiary…', filterAllStatus:'All statuses', filterNotStarted:'Not started', filterInProgress:'In progress', filterCompleted:'Completed', thRegion:'Zone', thSub:'Subsidiary', thPeriod:'Period', thProgress:'Progress', thStatus:'Status', badgeNotStarted:'Not started', badgeInProgress:'In progress', badgeCompleted:'Completed', lockLabel:'View only', unlockLabel:'Editing unlocked', modalTitle:'Admin Access', modalDesc:'Enter your PIN to unlock editing.', modalCancel:'Cancel', modalConfirm:'Unlock', pinWrong:'Incorrect PIN. Try again.', saving:'Saving…', saved:'✓ Saved', savedLocal:'✓ Saved locally', lockedTip:'Unlock editing to interact' },
+  fr: { hTitle:'IZI Safety — Harmonisation des Profils Utilisateurs', hSub:'Planning Tracker | Calendrier : 01/04/2026 – 31/12/2026', hMeta:'45 filiales · 8 régions · 9 mois', tabOverview:'Vue Générale', tabDetail:'Détail par Filiale', tabComms:'Communications', cardTotal:'Total Filiales', cardDone:'Complétées', cardProg:'En cours', cardPend:'Non démarrées', ganttTitle:'Planning Général – Vue Gantt par Zone', months:['Avr.','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.','Déc.'], monthsFull:['Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'], detailTitle:'Suivi Détaillé par Filiale', legendTitle:'Étapes suivies', filterAllRegions:'Toutes les zones', filterSearch:'Rechercher une filiale…', filterAllStatus:'Tous les statuts', filterNotStarted:'Non démarré', filterInProgress:'En cours', filterCompleted:'Complété', thRegion:'Zone', thSub:'Filiale', thPeriod:'Période', thProgress:'Progression', thStatus:'Statut', badgeNotStarted:'Non démarré', badgeInProgress:'En cours', badgeCompleted:'Complété', lockLabel:'Lecture seule', unlockLabel:'Édition déverrouillée', modalTitle:'Accès administrateur', modalDesc:'Entrez votre PIN pour déverrouiller l\'édition.', modalCancel:'Annuler', modalConfirm:'Déverrouiller', pinWrong:'PIN incorrect. Réessayez.', saving:'Enregistrement…', saved:'✓ Enregistré', savedLocal:'✓ Enregistré localement', lockedTip:'Déverrouiller pour interagir' }
 };
 function t(k) { return T[lang][k] || k; }
 
 const STORAGE_KEY = 'izi_tracker_state_v1';
 let saveTimer = null;
 
-function waitForFirebase(timeout=5000) {
-  return new Promise(resolve => {
+function waitForFirebase(timeout = 5000) {
+  return new Promise((resolve) => {
     if (window.firebaseReady) { resolve(true); return; }
     const start = Date.now();
     const check = setInterval(() => {
       if (window.firebaseReady) { clearInterval(check); resolve(true); }
-      else if (Date.now()-start > timeout) { clearInterval(check); resolve(false); }
+      else if (Date.now() - start > timeout) { clearInterval(check); resolve(false); }
     }, 50);
   });
 }
@@ -517,7 +633,7 @@ async function loadFromStorage() {
 }
 
 function applyStateFromObj(saved) {
-  try { Object.keys(saved).forEach(k => { if (state[k]) { STEPS.forEach(s => { if (saved[k]?.[s.key] !== undefined) state[k][s.key] = saved[k][s.key]; }); } }); } catch(e) {}
+  try { Object.keys(saved).forEach(k => { if (state[k]) { STEPS.forEach(s => { if (saved[k] && saved[k][s.key] !== undefined) state[k][s.key] = saved[k][s.key]; }); } }); } catch(e) {}
 }
 
 async function saveToStorage() {
@@ -541,7 +657,7 @@ function showSaveIndicator(msg) {
 }
 
 document.addEventListener('keydown', e => {
-  if (e.ctrlKey && e.shiftKey && e.key==='A') { e.preventDefault(); if (!isUnlocked) openModal(); else lockSession(); }
+  if (e.ctrlKey && e.shiftKey && e.key === 'A') { e.preventDefault(); if (!isUnlocked) openModal(); else lockSession(); }
 });
 
 function openModal() {
@@ -555,13 +671,17 @@ function openModal() {
   document.getElementById('modal-cancel').textContent = t('modalCancel');
   document.getElementById('modal-confirm').textContent = t('modalConfirm');
 }
+
 function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
+
 function submitPin() {
   const input = document.getElementById('pin-input').value;
   if (input === CORRECT_PIN) { isUnlocked = true; closeModal(); updateLockUI(); renderDetail(); }
   else { const inp = document.getElementById('pin-input'); inp.classList.add('error'); document.getElementById('pin-error').textContent = t('pinWrong'); inp.value = ''; setTimeout(() => inp.classList.remove('error'), 400); }
 }
+
 function lockSession() { isUnlocked = false; updateLockUI(); renderDetail(); }
+
 function updateLockUI() {
   const ind = document.getElementById('lock-indicator'); const lbl = document.getElementById('lock-label');
   if (isUnlocked) { ind.classList.add('unlocked'); lbl.textContent = t('unlockLabel'); }
@@ -570,146 +690,139 @@ function updateLockUI() {
 
 function getStatus(stepMap) {
   const done = STEPS.filter(s => stepMap[s.key]).length;
-  if (done===0) return 'not-started'; if (done===STEPS.length) return 'completed'; return 'in-progress';
+  if (done === 0) return 'not-started'; if (done === STEPS.length) return 'completed'; return 'in-progress';
 }
+
 function statusBadge(st) {
   const map = {'not-started':'badgeNotStarted','in-progress':'badgeInProgress','completed':'badgeCompleted'};
   return `<span class="badge ${st}">${t(map[st])}</span>`;
 }
+
 function updateCards() {
   let done=0, prog=0, pend=0;
-  Object.values(state).forEach(m => { const s=getStatus(m); if(s==='completed') done++; else if(s==='in-progress') prog++; else pend++; });
+  Object.values(state).forEach(m => { const s = getStatus(m); if(s==='completed') done++; else if(s==='in-progress') prog++; else pend++; });
   document.getElementById('cnt-done').textContent = done;
   document.getElementById('cnt-progress').textContent = prog;
   document.getElementById('cnt-pending').textContent = pend;
 }
 
-const PHASES = [
-  { name:'AFR/AFO (8)',  start:0.05, dur:1.2,  weeks:5,    color:'#939DA8', region:'AFR/AFO',  desc:"Ghana, Togo, Guinée Conakry, Cameroun, Sénégal, Côte d'ivoire, Gabon, Guinée Equatoriale" },
-  { name:'AFR/MOI (8)',  start:0.90, dur:1.5,  weeks:5,    color:'#939DA8', region:'AFR/MOI',  desc:'Tunisie, Maurice, Maroc, Algérie, Egypte, Ethiopie, Madagascar, Mozambique' },
-  { name:'AFR/NG (1)',   start:2.15, dur:0.62, weeks:0.62, color:'#939DA8', region:'AFR/NG',   desc:'Nigéria' },
-  { name:'AFR/ACE (8)',  start:2.45, dur:1.5,  weeks:5,    color:'#939DA8', region:'AFR/ACE',  desc:'Malawi, Zambie, RDC, Congo, Ouganda, Kenya, Tanzanie, Zimbabwe' },
-  { name:'AFR/ASNE (2)', start:4.00, dur:0.90, weeks:1.25, color:'#939DA8', region:'AFR/ASNE', desc:'Afrique du sud, Namibie' },
-  { name:'APMO (5)',     start:5.00, dur:0.95, weeks:3.12, color:'#939DA8', region:'APMO',     desc:'Cambodge, Fidji, Inde, Jordanie, Liban' },
-  { name:'EOMC (7)',     start:5.90, dur:1.35, weeks:4.37, color:'#939DA8', region:'EOMC',     desc:'Caraïbes, Rep Dominicaine, Polynésie, Jamaïque, Mayotte, Porto Rico, Réunion' },
-  { name:'LUB (6)',      start:7.10, dur:1.15, weeks:3.75, color:'#939DA8', region:'LUB',      desc:'Argentine, Brésil, Chili, Mexique, TEAFS, États-Unis' },
+const PHASES =[
+  { name:'AFR/AFO (8)',  start:0,    dur:1.5,  weeks:5,    color:'#939DA8', region:'AFR/AFO',  desc:"Ghana, Togo, Guinée Conakry, Cameroun, Sénégal, Côte d'ivoire, Gabon, Guinée Equatoriale" },
+  { name:'AFR/MOI (8)',  start:1.45, dur:1.5,  weeks:5,    color:'#939DA8', region:'AFR/MOI',  desc:'Tunisie, Maurice, Maroc, Algérie, Egypte, Ethiopie, Madagascar, Mozambique' },
+  { name:'AFR/NG (1)',   start:2.80, dur:0.62, weeks:0.62, color:'#939DA8', region:'AFR/NG',   desc:'Nigéria' },
+  { name:'AFR/ACE (8)',  start:3.25, dur:1.5,  weeks:5,    color:'#939DA8', region:'AFR/ACE',  desc:'Malawi, Zambie, RDC, Congo, Ouganda, Kenya, Tanzanie, Zimbabwe' },
+  { name:'AFR/ASNE (2)', start:4.75, dur:0.90, weeks:1.25, color:'#939DA8', region:'AFR/ASNE', desc:'Afrique du sud, Namibie' },
+  { name:'APMO (5)',     start:5.75, dur:0.95, weeks:3.12, color:'#939DA8', region:'APMO',     desc:'Cambodge, Fidji, Inde, Jordanie, Liban' },
+  { name:'EOMC (7)',     start:6.65, dur:1.35, weeks:4.37, color:'#939DA8', region:'EOMC',     desc:'Caraïbes, Rep Dominicaine, Polynésie, Jamaïque, Mayotte, Porto Rico, Réunion' },
+  { name:'LUB (6)',      start:7.85, dur:1.15, weeks:3.75, color:'#939DA8', region:'LUB',      desc:'Argentine, Brésil, Chili, Mexique, TEAFS, États-Unis' },
 ];
-const TOTAL_MONTHS = 10.25;
+const TOTAL_MONTHS = 9;
 
-function getSubStatus(rn, sn) { const k=`${rn}|${sn}`; if(!state[k]) return 'not-started'; return getStatus(state[k]); }
-function getRegionBarColor(rn, subs) {
-  const st = subs.map(s => getSubStatus(rn, s));
-  const done = st.filter(s=>s==='completed').length;
-  const inProg = st.filter(s=>s==='in-progress').length;
-  if (done===subs.length) return '#70AD47';
-  if (done>0 && inProg===0) return `color-mix(in srgb, #70AD47 ${Math.round(done/subs.length*100)}%, #939DA8)`;
-  if (inProg>0) return '#F4B942';
+function getSubStatus(regionName, subName) { const key = `${regionName}|${subName}`; if (!state[key]) return 'not-started'; return getStatus(state[key]); }
+
+function getRegionBarColor(regionName, subs) {
+  const statuses = subs.map(s => getSubStatus(regionName, s));
+  const done = statuses.filter(s => s === 'completed').length;
+  const inProg = statuses.filter(s => s === 'in-progress').length;
+  const total = subs.length;
+  if (done === total) return '#70AD47';
+  if (done > 0 && inProg === 0) { const pct = Math.round((done / total) * 100); return `color-mix(in srgb, #70AD47 ${pct}%, #939DA8)`; }
+  if (inProg > 0) return '#F4B942';
   return '#939DA8';
 }
 
 function renderGantt() {
   const monthRow = document.getElementById('gantt-month-row');
-  if (monthRow) {
-    const months = t('months');
-    monthRow.innerHTML = months.map((m,i) => `<div class="month-cell" style="flex:${i===0?'0.08':'1'}">${m}</div>`).join('');
-  }
+  if (monthRow) { const months = t('months'); monthRow.innerHTML = months.map(m => `<div class="month-cell">${m}</div>`).join(''); }
   const body = document.getElementById('gantt-body'); body.innerHTML = '';
   const tooltip = document.getElementById('gantt-tooltip');
   PHASES.forEach(p => {
     const row = document.createElement('div'); row.className = 'phase-row';
     const area = document.createElement('div'); area.className = 'bar-area';
-    for (let i=0; i<=TOTAL_MONTHS; i++) { const gl=document.createElement('div'); gl.className='grid-line'; gl.style.left=(i/TOTAL_MONTHS*100)+'%'; area.appendChild(gl); }
-    const region = REGIONS.find(r=>r.name===p.region); const subs = region?region.subs:[];
+    for (let i = 0; i <= TOTAL_MONTHS; i++) { const gl = document.createElement('div'); gl.className = 'grid-line'; gl.style.left = (i / TOTAL_MONTHS * 100) + '%'; area.appendChild(gl); }
+    const region = REGIONS.find(r => r.name === p.region); const subs = region ? region.subs :[];
     const bar = document.createElement('div'); bar.className = 'bar';
-    bar.style.left = (p.start/TOTAL_MONTHS*100)+'%';
-    bar.style.width = (p.dur/TOTAL_MONTHS*100)+'%';
-    bar.style.background = subs.length>0 ? getRegionBarColor(p.region, subs) : p.color;
-    const lbl = document.createElement('span'); lbl.textContent=p.name; lbl.style.cssText='text-shadow:0 1px 2px rgba(0,0,0,0.25);overflow:hidden;text-overflow:clip;white-space:nowrap;flex:1;min-width:0';
-    bar.style.overflow='hidden'; bar.appendChild(lbl); area.appendChild(bar); row.appendChild(area); body.appendChild(row);
-    const mf = t('monthsFull');
+    bar.style.left = (p.start / TOTAL_MONTHS * 100) + '%'; bar.style.width = (p.dur / TOTAL_MONTHS * 100) + '%';
+    bar.style.background = subs.length > 0 ? getRegionBarColor(p.region, subs) : p.color;
+    const lbl = document.createElement('span'); lbl.textContent = p.name; lbl.style.textShadow = '0 1px 2px rgba(0,0,0,0.25)'; lbl.style.overflow = 'hidden'; lbl.style.textOverflow = 'clip'; lbl.style.whiteSpace = 'nowrap'; lbl.style.flex = '1'; lbl.style.minWidth = '0'; bar.style.overflow = 'hidden';
+    bar.appendChild(lbl); area.appendChild(bar); row.appendChild(area); body.appendChild(row);
+    const months = t('monthsFull');
     row.addEventListener('mouseenter', () => {
-      const sM=mf[Math.floor(p.start)]; const eM=mf[Math.min(Math.floor(p.start+p.dur),mf.length-1)];
-      const dn=subs.filter(s=>getSubStatus(p.region,s)==='completed').length;
-      const ip=subs.filter(s=>getSubStatus(p.region,s)==='in-progress').length;
-      document.getElementById('tt-name').textContent=p.name;
-      document.getElementById('tt-detail').textContent=lang==='fr'?`${sM} → ${eM} · ${p.weeks}w · ${dn}✓ ${ip}⏳`:`${sM} → ${eM} · ${p.weeks}w · ${dn} done, ${ip} in progress`;
-      document.getElementById('tt-desc').textContent=p.desc||''; tooltip.style.opacity='1';
+      const startM = months[Math.floor(p.start)]; const endM = months[Math.min(Math.floor(p.start + p.dur), TOTAL_MONTHS - 1)];
+      const done = subs.filter(s => getSubStatus(p.region, s) === 'completed').length; const inProg = subs.filter(s => getSubStatus(p.region, s) === 'in-progress').length;
+      const detail = lang === 'fr' ? `${startM} → ${endM}  ·  ${p.weeks}w  ·  ${done}✓ ${inProg}⏳` : `${startM} → ${endM}  ·  ${p.weeks}w  ·  ${done} done, ${inProg} in progress`;
+      document.getElementById('tt-name').textContent = p.name; document.getElementById('tt-detail').textContent = detail; document.getElementById('tt-desc').textContent = p.desc || ''; tooltip.style.opacity = '1';
     });
-    row.addEventListener('mousemove', e => { tooltip.style.left=(e.clientX+14)+'px'; tooltip.style.top=(e.clientY-10)+'px'; });
-    row.addEventListener('mouseleave', () => { tooltip.style.opacity='0'; });
+    row.addEventListener('mousemove', e => { tooltip.style.left = (e.clientX + 14) + 'px'; tooltip.style.top = (e.clientY - 10) + 'px'; });
+    row.addEventListener('mouseleave', () => { tooltip.style.opacity = '0'; });
   });
-  const fl=document.getElementById('gantt-footer-left'); const fr2=document.getElementById('gantt-footer-right');
-  if (fl) fl.textContent = lang==='fr'?'Avril 2026':'April 2026';
-  if (fr2) fr2.textContent = lang==='fr'?'Janvier 2027':'January 2027';
+  const fl = document.getElementById('gantt-footer-left'); const fr2 = document.getElementById('gantt-footer-right');
+  if (fl) fl.textContent = lang === 'fr' ? 'Avril 2026' : 'April 2026';
+  if (fr2) fr2.textContent = lang === 'fr' ? 'Décembre 2026' : 'December 2026';
 }
 
 function renderStepsLegend() {
-  const grid=document.getElementById('steps-legend-grid'); grid.innerHTML='';
-  STEPS.forEach(s => { const div=document.createElement('div'); div.className='step-pill'; div.title=lang==='en'?s.descEN:s.descFR; div.innerHTML=`<div class="snum">${s.num}</div><div><strong>${lang==='en'?s.labelEN:s.labelFR}</strong><br><span style="color:#555;font-size:10px">${lang==='en'?s.descEN:s.descFR}</span></div>`; grid.appendChild(div); });
+  const grid = document.getElementById('steps-legend-grid'); grid.innerHTML = '';
+  STEPS.forEach(s => { const div = document.createElement('div'); div.className = 'step-pill'; div.title = lang==='en' ? s.descEN : s.descFR; div.innerHTML = `<div class="snum">${s.num}</div><div><strong>${lang==='en'?s.labelEN:s.labelFR}</strong><br><span style="color:#555;font-size:10px">${lang==='en'?s.descEN:s.descFR}</span></div>`; grid.appendChild(div); });
 }
 
 function renderDetailHeader() {
-  document.getElementById('detail-head').innerHTML=`<th class="left">${t('thRegion')}</th><th class="left">${t('thSub')}</th><th>${t('thPeriod')}</th>${STEPS.map(s=>`<th title="${lang==='en'?s.descEN:s.descFR}">${lang==='en'?s.labelEN:s.labelFR}</th>`).join('')}<th>${t('thProgress')}</th><th>${t('thStatus')}</th>`;
+  const tr = document.getElementById('detail-head');
+  tr.innerHTML = `<th class="left">${t('thRegion')}</th><th class="left">${t('thSub')}</th><th>${t('thPeriod')}</th>${STEPS.map(s=>`<th title="${lang==='en'?s.descEN:s.descFR}">${lang==='en'?s.labelEN:s.labelFR}</th>`).join('')}<th>${t('thProgress')}</th><th>${t('thStatus')}</th>`;
 }
 
 function renderDetail() {
-  const fR=document.getElementById('filter-region').value;
-  const fS=document.getElementById('filter-search').value.toLowerCase();
-  const fSt=document.getElementById('filter-status').value;
-  const mf=t('monthsFull'); const tbody=document.getElementById('detail-body'); tbody.innerHTML='';
+  const filterRegion = document.getElementById('filter-region').value;
+  const filterSearch = document.getElementById('filter-search').value.toLowerCase();
+  const filterStatus = document.getElementById('filter-status').value;
+  const mf = t('monthsFull'); const tbody = document.getElementById('detail-body'); tbody.innerHTML = '';
   REGIONS.forEach(r => {
-    if (fR && fR!==r.name) return;
+    if (filterRegion && filterRegion !== r.name) return;
     r.subs.forEach(sub => {
-      if (fS && !sub.toLowerCase().includes(fS)) return;
-      const key=`${r.name}|${sub}`; const sm=state[key]; const st=getStatus(sm);
-      if (fSt && fSt!==st) return;
-      const done=STEPS.filter(s=>sm[s.key]).length; const pct=Math.round(done/STEPS.length*100);
-      const period=r.start!==r.end?`${mf[r.start]} – ${mf[r.end]}`:mf[r.start];
-      const tr=document.createElement('tr');
-      const cells=STEPS.map(s => isUnlocked
-        ? `<td class="step-check editable ${sm[s.key]?'done':''}" onclick="toggleStep('${key}','${s.key}')" title="${sm[s.key]?'Done – click to undo':'Click to mark done'}">${sm[s.key]?'✅':'⬜'}</td>`
-        : `<td class="step-check locked ${sm[s.key]?'done':''}" title="${t('lockedTip')}">${sm[s.key]?'✅':'⬜'}</td>`
-      ).join('');
-      tr.innerHTML=`<td class="left"><span class="region-tag">${r.name}</span></td><td class="left" style="font-weight:600">${sub}</td><td style="color:#555;white-space:nowrap;font-size:11px">${period}</td>${cells}<td><div style="display:flex;align-items:center;gap:8px;justify-content:center"><div class="prog-wrap"><div class="prog-bar" style="width:${pct}%"></div></div><span style="font-size:11px;color:#555">${pct}%</span></div></td><td>${statusBadge(st)}</td>`;
+      if (filterSearch && !sub.toLowerCase().includes(filterSearch)) return;
+      const key = `${r.name}|${sub}`; const stepMap = state[key]; const st = getStatus(stepMap);
+      if (filterStatus && filterStatus !== st) return;
+      const done = STEPS.filter(s => stepMap[s.key]).length; const pct = Math.round(done/STEPS.length*100);
+      const period = r.start !== r.end ? `${mf[r.start]} – ${mf[r.end]}` : mf[r.start];
+      const tr = document.createElement('tr');
+      const stepCells = STEPS.map(s => {
+        if (isUnlocked) { return `<td class="step-check editable ${stepMap[s.key]?'done':''}" onclick="toggleStep('${key}','${s.key}')" title="${stepMap[s.key]?'Done – click to undo':'Click to mark done'}">${stepMap[s.key]?'✅':'⬜'}</td>`; }
+        else { return `<td class="step-check locked ${stepMap[s.key]?'done':''}" title="${t('lockedTip')}">${stepMap[s.key]?'✅':'⬜'}</td>`; }
+      }).join('');
+      tr.innerHTML = `<td class="left"><span class="region-tag">${r.name}</span></td><td class="left" style="font-weight:600">${sub}</td><td style="color:#555;white-space:nowrap;font-size:11px">${period}</td>${stepCells}<td><div style="display:flex;align-items:center;gap:8px;justify-content:center"><div class="prog-wrap"><div class="prog-bar" style="width:${pct}%"></div></div><span style="font-size:11px;color:#555">${pct}%</span></div></td><td>${statusBadge(st)}</td>`;
       tbody.appendChild(tr);
     });
   });
 }
 
-function clearFilters() {
-  document.getElementById('filter-region').value='';
-  document.getElementById('filter-search').value='';
-  document.getElementById('filter-status').value='';
-  renderDetail();
-}
+function toggleStep(key, stepKey) { if (!isUnlocked) return; state[key][stepKey] = !state[key][stepKey]; renderAll(); scheduleSave(); }
 
-function toggleStep(key, stepKey) { if(!isUnlocked) return; state[key][stepKey]=!state[key][stepKey]; renderAll(); scheduleSave(); }
 function renderAll() { updateCards(); renderGantt(); renderStepsLegend(); renderDetailHeader(); renderDetail(); renderComms(); updateLockUI(); }
 
 function setLang(l) {
-  lang=l;
-  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.textContent.trim()===l.toUpperCase()));
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent.trim()===l.toUpperCase()));
   applyLang(); initFilters(); renderAll();
 }
 
 function applyLang() {
-  const ids={'h-title':'hTitle','h-sub':'hSub','h-meta':'hMeta','tab-btn-summary':'tabOverview','tab-btn-detail':'tabDetail','tab-btn-comms':'tabComms','tab-btn-workflow':'tabWorkflow','card-total-lbl':'cardTotal','card-done-lbl':'cardDone','card-prog-lbl':'cardProg','card-pend-lbl':'cardPend','gantt-title':'ganttTitle','detail-title':'detailTitle','legend-title':'legendTitle'};
-  Object.entries(ids).forEach(([id,k])=>{ const el=document.getElementById(id); if(el) el.textContent=t(k); });
-  document.getElementById('filter-search').placeholder=t('filterSearch');
+  const ids = { 'h-title':'hTitle','h-sub':'hSub','h-meta':'hMeta','tab-btn-summary':'tabOverview','tab-btn-detail':'tabDetail','tab-btn-comms':'tabComms','card-total-lbl':'cardTotal','card-done-lbl':'cardDone','card-prog-lbl':'cardProg','card-pend-lbl':'cardPend','gantt-title':'ganttTitle','detail-title':'detailTitle','legend-title':'legendTitle' };
+  Object.entries(ids).forEach(([id,k]) => { const el=document.getElementById(id); if(el) el.textContent=t(k); });
+  document.getElementById('filter-search').placeholder = t('filterSearch');
   updateLockUI();
 }
 
 function switchTab(tab) {
-  document.querySelectorAll('.tab').forEach(tb=>{ const id=tb.id.replace('tab-btn-',''); tb.classList.toggle('active',id===tab); });
-  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id===`tab-${tab}`));
+  document.querySelectorAll('.tab').forEach((tb,i) => tb.classList.toggle('active', ['summary','detail','comms','workflow'][i]===tab));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id===`tab-${tab}`));
 }
 
 function initFilters() {
-  const fr=document.getElementById('filter-region'); const curR=fr.value;
-  fr.innerHTML=`<option value="">${t('filterAllRegions')}</option>`;
-  REGIONS.forEach(r=>{ const o=document.createElement('option'); o.value=r.name; o.textContent=r.name; fr.appendChild(o); }); fr.value=curR;
-  const fs=document.getElementById('filter-status'); const curS=fs.value;
-  fs.innerHTML=`<option value="">${t('filterAllStatus')}</option><option value="not-started">${t('filterNotStarted')}</option><option value="in-progress">${t('filterInProgress')}</option><option value="completed">${t('filterCompleted')}</option>`; fs.value=curS;
+  const fr = document.getElementById('filter-region'); const curR = fr.value;
+  fr.innerHTML = `<option value="">${t('filterAllRegions')}</option>`;
+  REGIONS.forEach(r => { const o=document.createElement('option'); o.value=r.name; o.textContent=r.name; fr.appendChild(o); }); fr.value = curR;
+  const fs = document.getElementById('filter-status'); const curS = fs.value;
+  fs.innerHTML = `<option value="">${t('filterAllStatus')}</option><option value="not-started">${t('filterNotStarted')}</option><option value="in-progress">${t('filterInProgress')}</option><option value="completed">${t('filterCompleted')}</option>`; fs.value = curS;
 }
 
 async function init() { await loadFromStorage(); applyLang(); initFilters(); renderAll(); document.getElementById('loading-overlay').classList.add('hidden'); }
