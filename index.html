@@ -918,10 +918,36 @@ function renderDetail() {
       const key = `${r.name}|${sub}`; const stepMap = state[key]; const st = getStatus(stepMap);
       if (filterStatus && filterStatus !== st) return;
       const done = STEPS.filter(s => stepMap[s.key]).length; const pct = Math.round(done/STEPS.length*100);
-      // Map region start/end to new 10-month scale
-      const startIdx = Math.min(Math.round(r.start / TOTAL_MONTHS * 10), 9);
-      const endIdx = Math.min(Math.round(r.end / TOTAL_MONTHS * 10), 9);
-      const period = startIdx !== endIdx ? `${mf[startIdx]} – ${mf[endIdx]}` : mf[startIdx];
+
+      // Find this region's Gantt phase to get start/dur on 0-9 scale
+      const phase = PHASES.find(p => p.region === r.name);
+      const subIdx = r.subs.indexOf(sub);
+      const subCount = r.subs.length;
+
+      // Spread subsidiaries evenly across region's Gantt window
+      // Each sub gets an equal slice of the region's duration
+      const sliceDur = phase ? phase.dur / subCount : 1;
+      const subStart = phase ? phase.start + subIdx * sliceDur : r.start;
+      const subEnd   = subStart + sliceDur;
+
+      // Convert 0-9 month scale to actual calendar date (PROJECT_START + fraction of total days)
+      const TOTAL_DAYS_SCALE = 263; // total project days
+      const toDate = frac => {
+        const d = new Date(PROJECT_START);
+        d.setDate(d.getDate() + Math.round((frac / TOTAL_MONTHS) * TOTAL_DAYS_SCALE));
+        return d;
+      };
+      const startDate = toDate(subStart);
+      const endDate   = toDate(subEnd);
+
+      const monthNames = t('monthsFull');
+      const fmtDate = d => {
+        const m = monthNames[d.getMonth() === 0 ? 9 : d.getMonth() - 3]; // map calendar month to our array
+        // Simpler: use short month name directly
+        const shortMonths = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return `${shortMonths[d.getMonth()]} ${d.getDate()}`;
+      };
+      const period = `${fmtDate(startDate)} – ${fmtDate(endDate)}`;
       const tr = document.createElement('tr');
       const stepCells = STEPS.map(s => {
         if (isUnlocked) { return `<td class="step-check editable ${stepMap[s.key]?'done':''}" onclick="toggleStep('${key}','${s.key}')" title="${stepMap[s.key]?'Done – click to undo':'Click to mark done'}">${stepMap[s.key]?'✅':'⬜'}</td>`; }
