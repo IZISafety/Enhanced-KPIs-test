@@ -611,7 +611,7 @@ function renderGantt() {
   const monthRow = document.getElementById('gantt-month-row');
   if (monthRow) {
     const months = t('months');
-    monthRow.innerHTML = months.map((m,i) => `<div class="month-cell" style="flex:${i===0?'0.15':'1'}">${m}</div>`).join('');
+    monthRow.innerHTML = months.map((m,i) => `<div class="month-cell" style="flex:${i===0?'0.08':'1'}">${m}</div>`).join('');
   }
   const body = document.getElementById('gantt-body'); body.innerHTML = '';
   const tooltip = document.getElementById('gantt-tooltip');
